@@ -15,4 +15,12 @@ public interface UserMapper {
      * @return
      */
     User login(String loginValue, String loginName, String password);
+
+    /***
+     * 查看字段重复次数
+     * @param column 属性
+     * @param value 值
+     * @return
+     */
+    int count(String column, String value);
 }

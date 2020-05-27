@@ -9,6 +9,12 @@ import static org.springframework.web.cors.CorsConfiguration.ALL;
 @EnableWebMvc
 public class WebMvcConfig implements WebMvcConfigurer {
 
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(new RequestInterceptor()).addPathPatterns(("/**"))
+//                .excludePathPatterns("/login", "/register");
+    }
+
     /***
      * 允许接受CORS的跨域请求
      * @param registry
