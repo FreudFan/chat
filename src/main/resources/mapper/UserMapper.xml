@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace表示命名空间 -->
+<mapper namespace="edu.sandau.chat.dao.mapper.UserMapper">
+
+    <select id="login" parameterType="java.lang.String" resultType="User">
+        select * from user where #{loginValue} = #{loginName} and password = #{password}
+    </select>
+
+</mapper>
