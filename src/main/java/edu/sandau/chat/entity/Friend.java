@@ -10,41 +10,36 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /***
- * 文件表
+ * 好友列表
  */
 @Data
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Attachment {
+public class Friend {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    /*** 文件名 **/
+    /*** 自己的ID **/
     @Column(nullable = false)
-    private String name;
+    private Integer userId;
 
-    /*** 文件大小 **/
+    /*** 朋友的ID **/
     @Column(nullable = false)
-    private String contentSize;
+    private Integer friendId;
 
-    /*** 文件类型 **/
+    /*** 备注昵称 **/
+    private String nickname;
+
+    /*** 所属分组id **/
     @Column(nullable = false)
-    private String fileType;
+    private Integer groupId;
 
-    /*** 上传用户 **/
-    @Column(nullable = false)
-    private Integer ownerId;
-
-    /*** 文件大字段 **/
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    @Column(columnDefinition="longblob")
-    private byte[] content;
-
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @CreatedDate
     private LocalDateTime createTime;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @LastModifiedDate
     private LocalDateTime updateTime;
 }

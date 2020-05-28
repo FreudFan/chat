@@ -10,41 +10,32 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /***
- * 文件表
+ * 群成员
  */
 @Data
-@Entity
+@Entity(name = "user_group_to_user")
 @EntityListeners(AuditingEntityListener.class)
-public class Attachment {
+public class GroupUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    /*** 文件名 **/
+    /*** 用户id **/
     @Column(nullable = false)
-    private String name;
+    private Integer userId;
 
-    /*** 文件大小 **/
+    /*** 群id **/
     @Column(nullable = false)
-    private String contentSize;
+    private Integer groupId;
 
-    /*** 文件类型 **/
+    /*** 群内用户昵称 **/
     @Column(nullable = false)
-    private String fileType;
-
-    /*** 上传用户 **/
-    @Column(nullable = false)
-    private Integer ownerId;
-
-    /*** 文件大字段 **/
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    @Column(columnDefinition="longblob")
-    private byte[] content;
+    private String nickname;
 
     @CreatedDate
     private LocalDateTime createTime;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @LastModifiedDate
     private LocalDateTime updateTime;
 }
