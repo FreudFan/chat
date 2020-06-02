@@ -1,6 +1,7 @@
 package edu.sandau.chat.service;
 
 import edu.sandau.chat.entity.User;
+import edu.sandau.chat.enums.RequestFriendsStatusEnum;
 import edu.sandau.chat.enums.UserFormTypeEnum;
 import edu.sandau.chat.vo.MyFriendsVO;
 import edu.sandau.chat.vo.UserVO;
@@ -41,11 +42,15 @@ public interface UserService {
     List<UserVO> searchUser(String name);
 
     /***
-     * 申请朋友的前置条件
-     * @param username 目标用户名
+     * 处理申请好友
+     * 前置条件:
+     * 1. 搜索的用户如果不存在，返回[没有找到用户]
+     * 2. 搜索账号是你自己，返回[不能添加自己]
+     * 3. 搜索的朋友已经是你的好友，返回[该用户已经是你的好友啦]
+     * @param username
      * @return
      */
-    User preconditionRequestFriend(String username);
+    RequestFriendsStatusEnum requestFriend(String username);
 
     /***
      * 查询用户好友列表

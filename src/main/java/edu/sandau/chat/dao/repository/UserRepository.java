@@ -5,5 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface UserRepository extends CrudRepository<User, Integer> {
 
-    User findAllByNameAndIdIsNotIn(String username, Integer currentId);
+    User findAllByName(String username);
 }

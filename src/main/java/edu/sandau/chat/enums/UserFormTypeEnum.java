@@ -6,7 +6,6 @@ import lombok.Getter;
 /***
  * 用户登录方式
  */
-@Getter
 @AllArgsConstructor
 public enum UserFormTypeEnum {
     /***
@@ -22,6 +21,6 @@ public enum UserFormTypeEnum {
      */
     NAME(2, "name");
 
-    private final Integer value;
-    private final String name;
+    public final Integer value;
+    public final String name;
 }

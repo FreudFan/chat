@@ -2,12 +2,14 @@ package edu.sandau.chat.service.impl;
 
 import edu.sandau.chat.dao.FriendDao;
 import edu.sandau.chat.dao.FriendGroupDao;
+import edu.sandau.chat.dao.FriendRequestDao;
 import edu.sandau.chat.dao.UserDao;
 import edu.sandau.chat.entity.Friend;
 import edu.sandau.chat.entity.FriendGroup;
+import edu.sandau.chat.entity.FriendRequest;
 import edu.sandau.chat.entity.User;
+import edu.sandau.chat.enums.RequestFriendsStatusEnum;
 import edu.sandau.chat.enums.UserFormTypeEnum;
-import edu.sandau.chat.exception.FriendException;
 import edu.sandau.chat.exception.RegisterException;
 import edu.sandau.chat.interceptor.RequestContent;
 import edu.sandau.chat.service.UserService;
@@ -30,10 +32,12 @@ public class UserServiceImpl implements UserService {
     private FriendGroupDao friendGroupDao;
     @Autowired
     private FriendDao friendDao;
+    @Autowired
+    private FriendRequestDao friendRequestDao;
 
     @Override
     public User login(UserFormTypeEnum loginValue, String loginName, String password) {
-        User user = userDao.getMapper().login(loginValue.getName(), loginName, password);
+        User user = userDao.getMapper().login(loginValue.name, loginName, password);
         return user;
     }
 
@@ -51,13 +55,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean check(UserFormTypeEnum userFormTypeEnum, String value) {
-        return userDao.getMapper().count(userFormTypeEnum.getName(), value)  == 0;
+        return userDao.getMapper().count(userFormTypeEnum.name, value)  == 0;
     }
 
     @Override
     public List<UserVO> searchUser(String name) {
         int currentId = RequestContent.getCurrentUser().getId();
-        List<UserVO> users = userDao.getMapper().searchUser(UserFormTypeEnum.NAME.getName(), name, currentId);
+        List<UserVO> users = userDao.getMapper().searchUser(UserFormTypeEnum.NAME.name, name, currentId);
         List<Friend> friends = friendDao.getRepository().findAllByUserId(currentId);
         for(UserVO userVO: users) {
             userVO.setIsFriend(false);
@@ -72,17 +76,27 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User preconditionRequestFriend(String username) {
-        int currentId = RequestContent.getCurrentUser().getId();
-        User user = userDao.getRepository().findAllByNameAndIdIsNotIn(username, currentId);
-        if(user == null) {
-            throw new FriendException("没有找到用户" + username);
+    public RequestFriendsStatusEnum requestFriend(String username) {
+        User currentUser = RequestContent.getCurrentUser();
+        User acceptUser = userDao.getRepository().findAllByName(username);
+        if(acceptUser == null) {
+            return RequestFriendsStatusEnum.USER_NOT_EXIST;
         }
-        Friend friend = friendDao.getRepository().findAllByUserIdAndFriendId(user.getId(), currentId);
+        if(acceptUser.getName().equals(currentUser.getName())) {
+            return RequestFriendsStatusEnum.NOT_YOURSELF;
+        }
+        Friend friend = friendDao.getRepository().findAllByUserIdAndFriendId(currentUser.getId(), acceptUser.getId());
         if(friend != null) {
-            throw new FriendException("该用户已经是你的好友啦");
+            return RequestFriendsStatusEnum.ALREADY_FRIENDS;
         }
-        return user;
+
+        FriendRequest friendRequest = new FriendRequest();
+        friendRequest.setSendUserId(RequestContent.getCurrentUser().getId());
+        friendRequest.setAcceptUserId(acceptUser.getId());
+        friendRequestDao.getRepository().save(friendRequest);
+
+        //TODO: 向目标用户发送好友申请
+        return RequestFriendsStatusEnum.SUCCESS;
     }
 
     @Override

@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class FriendRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Integer id;
 
     /*** 发送用户id **/
     @Column(nullable = false)
@@ -24,7 +24,6 @@ public class FriendRequest {
     private Integer acceptUserId;
 
     /*** 发送请求的时间 **/
-    @Column(nullable = false)
     @CreatedDate
     private LocalDateTime requestDateTime;
 }

@@ -33,9 +33,9 @@ public class UserController {
      * @return
      */
     @GetMapping("/friend")
-    public MyFriendsVO myFriends() {
+    public List<MyFriendsVO> myFriends() {
         //TODO 查询好友列表
-        userService.queryMyFriends(RequestContent.getCurrentUser().getId());
-        return null;
+        List<MyFriendsVO> friendsVOS = userService.queryMyFriends(RequestContent.getCurrentUser().getId());
+        return friendsVOS;
     }
 }
