@@ -13,4 +13,5 @@ public class UserVO {
     private Integer gender;
     private String headPortrait;
     private Boolean isFriend;
+    private Integer groupId;
 }
