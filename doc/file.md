@@ -3,7 +3,7 @@
 ### 上传
 
 ```
-POST /up
+POST /file/up
 ```
 参数
 ```

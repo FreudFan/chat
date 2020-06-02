@@ -8,7 +8,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum LoginTypeEnum {
+public enum UserFormTypeEnum {
     /***
      * 邮箱
      */
@@ -16,7 +16,11 @@ public enum LoginTypeEnum {
     /***
      * 手机号
      */
-    TELEPHONE(1, "telephone");
+    TELEPHONE(1, "telephone"),
+    /***
+     * 用户名
+     */
+    NAME(2, "name");
 
     private final Integer value;
     private final String name;

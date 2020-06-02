@@ -1,18 +1,24 @@
 package edu.sandau.chat.config;
 
-import org.springframework.context.annotation.Configuration;
+import edu.sandau.chat.interceptor.LoginInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.*;
 
 import static org.springframework.web.cors.CorsConfiguration.ALL;
 
-@Configuration
-@EnableWebMvc
+//@Configuration
+//@EnableWebMvc
+@Component
 public class WebMvcConfig implements WebMvcConfigurer {
+    @Autowired
+    private LoginInterceptor loginInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(new RequestInterceptor()).addPathPatterns(("/**"))
-//                .excludePathPatterns("/login", "/register");
+        registry.addInterceptor(loginInterceptor)
+                .addPathPatterns("/**")
+                .excludePathPatterns("/auth/**", "/ws/**");
     }
 
     /***

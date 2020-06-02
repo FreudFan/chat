@@ -19,7 +19,7 @@ public class MysqlAttachmentServiceImpl implements AttachmentService {
     private AttachmentDao dao;
 
     @Override
-    public Integer saveAttachment(MultipartFile file) {
+    public String saveAttachment(MultipartFile file) {
         Integer attachmentId = null;
         try {
             String originalName = file.getOriginalFilename();
@@ -42,7 +42,7 @@ public class MysqlAttachmentServiceImpl implements AttachmentService {
                 log.error("关闭文件流失败", ex);
             }
         }
-        return attachmentId;
+        return String.valueOf(attachmentId);
     }
 
 }

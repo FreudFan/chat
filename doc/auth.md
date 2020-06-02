@@ -3,7 +3,7 @@
 ### 登录
 
 ```
-POST /login
+POST /auth/login
 ```
 参数
 ```
@@ -26,7 +26,7 @@ POST /login
 ### 注册
 
 ```
-POST /register
+POST /auth/register
 ```
 参数
 ```

@@ -32,7 +32,6 @@ public class Friend {
     private String nickname;
 
     /*** 所属分组id **/
-    @Column(nullable = false)
     private Integer groupId;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

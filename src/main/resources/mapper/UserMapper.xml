@@ -13,4 +13,16 @@
         select count(1) from user where ${column} = #{value}
     </select>
 
+    <select id="searchUser" parameterType="java.lang.String" resultType="userVO">
+        select id, name, gender, head_portrait from user where ${column} like concat('%', #{value}, '%' ) and id != #{currentId};
+    </select>
+
+    <resultMap type="edu.sandau.chat.vo.UserVO" id="userVO">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="gender" property="gender" />
+        <result column="nickname" property="nickname" />
+        <result column="head_portrait" property="headPortrait" />
+    </resultMap>
+
 </mapper>

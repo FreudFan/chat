@@ -24,7 +24,7 @@ public class FileController {
         if(file == null) {
             throw new AttachmentException("上传文件失败，文件为空 !");
         }
-        Integer attachmentId = attachmentService.saveAttachment(file);
+        String attachmentId = attachmentService.saveAttachment(file);
         return new ResponseEntity<>(attachmentId, HttpStatus.OK);
     }
 
