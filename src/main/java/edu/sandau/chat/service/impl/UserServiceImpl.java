@@ -104,16 +104,10 @@ public class UserServiceImpl implements UserService {
         List<UserVO> users = userDao.getMapper().queryFriendsList(userId);
         List<FriendGroup> groups = friendGroupDao.getRepository().findAllByUserId(userId);
 
-        //TODO 转换对象为vo
         List<MyFriendsVO> myFriendsVOList = new ArrayList<>();
-        MyFriendsVO myFriendsVO = new MyFriendsVO();
-        myFriendsVO.setUsers(users);
-        Iterator it = groups.iterator();
-        Iterator itusers = users.iterator();
-        int index=0;
-        for(int i=0;i<groups.size();i++) {
+        for (int i=0; i<groups.size(); i++) {
             List<UserVO> userVOList = new ArrayList<>();
-            for(int j=0;j<users.size();j++) {
+            for (int j=0; j<users.size(); j++) {
                 if (users.get(j).getGroupId().equals(groups.get(i).getId()))
                 {
                     userVOList.add(users.get(j));
@@ -122,6 +116,8 @@ public class UserServiceImpl implements UserService {
             MyFriendsVO tempMyFriendsVO = new MyFriendsVO();
             tempMyFriendsVO.setUsers(userVOList);
             tempMyFriendsVO.setGroupId(groups.get(i).getId());
+            tempMyFriendsVO.setGroupName(groups.get(i).getName());
+
             myFriendsVOList.add(tempMyFriendsVO);
         }
         return myFriendsVOList;

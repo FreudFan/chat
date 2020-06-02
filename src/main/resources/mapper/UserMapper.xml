@@ -17,11 +17,11 @@
         select id, name, gender, head_portrait from user where ${column} like concat('%', #{value}, '%' ) and id != #{currentId};
     </select>
 
-    <select id="queryMyFriends" parameterType="java.lang.String" resultType="MyFriendsVO">
-        select id, name, gender, head_portrait, group_id from user, friend where friend.userId = user.id and user.id = #{userId};
+    <select id="queryFriendsList" parameterType="java.lang.Integer" resultType="userVO">
+        select user.id, user.name, user.gender, user.head_portrait, friend.group_id, friend.nickname
+        from user, friend
+        where user.id = friend.friend_id and friend.user_id = #{userId}
     </select>
-
-
 
     <resultMap type="edu.sandau.chat.vo.UserVO" id="userVO">
         <id column="id" property="id" />
@@ -29,6 +29,7 @@
         <result column="gender" property="gender" />
         <result column="nickname" property="nickname" />
         <result column="head_portrait" property="headPortrait" />
+        <result column="group_id" property="groupId" />
     </resultMap>
 
 </mapper>
