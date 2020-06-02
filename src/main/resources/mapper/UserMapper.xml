@@ -17,6 +17,12 @@
         select id, name, gender, head_portrait from user where ${column} like concat('%', #{value}, '%' ) and id != #{currentId};
     </select>
 
+    <select id="queryMyFriends" parameterType="java.lang.String" resultType="MyFriendsVO">
+        select id, name, gender, head_portrait, group_id from user, friend where friend.userId = user.id and user.id = #{userId};
+    </select>
+
+
+
     <resultMap type="edu.sandau.chat.vo.UserVO" id="userVO">
         <id column="id" property="id" />
         <result column="name" property="name" />

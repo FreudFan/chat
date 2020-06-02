@@ -104,57 +104,26 @@ public class UserServiceImpl implements UserService {
         List<UserVO> users = userDao.getMapper().queryFriendsList(userId);
         List<FriendGroup> groups = friendGroupDao.getRepository().findAllByUserId(userId);
 
-
         //TODO 转换对象为vo
         List<MyFriendsVO> myFriendsVOList = new ArrayList<>();
         MyFriendsVO myFriendsVO = new MyFriendsVO();
         myFriendsVO.setUsers(users);
         Iterator it = groups.iterator();
         Iterator itusers = users.iterator();
-        int i=0,y=0;
-        while(it.hasNext()) {
-            while(itusers.hasNext())
-            {
-                if(users.get(y++).getGroupId().equals(groups.get(i).getId()))
+        int index=0;
+        for(int i=0;i<groups.size();i++) {
+            List<UserVO> userVOList = new ArrayList<>();
+            for(int j=0;j<users.size();j++) {
+                if (users.get(j).getGroupId().equals(groups.get(i).getId()))
                 {
-                    MyFriendsVO tempMyFriendsVO = new MyFriendsVO();
-                    tempMyFriendsVO.setGroupId(groups.get(i++).getId());
-                    tempMyFriendsVO.setUsers((List<UserVO>) users.get(y-1));
-                    myFriendsVOList.add(tempMyFriendsVO);
+                    userVOList.add(users.get(j));
                 }
             }
-            y=0;
-            i++;
+            MyFriendsVO tempMyFriendsVO = new MyFriendsVO();
+            tempMyFriendsVO.setUsers(userVOList);
+            tempMyFriendsVO.setGroupId(groups.get(i).getId());
+            myFriendsVOList.add(tempMyFriendsVO);
         }
         return myFriendsVOList;
-
-
-      /*  for(int i = 0 ; i < users.size() ; i++) {
-
-        }*/
-
-
-/*
-        while(groups.isEmpty())
-        {
-            groups.
-        }
-
-
-        MyFriendsVO myFriendsVO = new MyFriendVO();
-        myFriendsVO.getUsers();
-        while(users.isEmpty())
-        {
-
-        }
-
-        groups.add()
-        groups.forEach(group ->{
-            MyFriendsVO friendsVO = new MyFriendsVO();
-            friendsVO.setGroupId(group.getId());
-            friendsVO.setGroupName(group.getName());
-            friendsVO.setUsers(groups.);
-        });*/
-
     }
 }
