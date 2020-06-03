@@ -5,9 +5,9 @@ import lombok.Data;
 @Data
 public class AcceptFriendVO {
     /***
-     * 好友id
+     * 发送申请的用户id
      */
-    Integer friendId;
+    Integer sendUserId;
     /***
      * 对好友申请的操作
      * 枚举：OperatorFriendRequestTypeEnum

@@ -42,4 +42,19 @@ public interface UserMapper {
      * @return 好友概要信息
      */
     List<UserVO> queryFriendsList(Integer userId);
+
+    /***
+     * 根据名字查询用户
+     * @param username name值是唯一的
+     * @return
+     */
+    User findByName(String username);
+
+    /***
+     * 根据用户id查询好友基本信息
+     * @param userId 当前用户id
+     * @param friendId 好友id
+     * @return
+     */
+    UserVO findFriendById(Integer userId, Integer friendId);
 }

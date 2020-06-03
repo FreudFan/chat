@@ -1,7 +1,6 @@
 package edu.sandau.chat.enums;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 /**
  * 忽略或者通过 好友请求的枚举

@@ -19,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -32,8 +34,6 @@ public class UserServiceImpl implements UserService {
     private FriendGroupDao friendGroupDao;
     @Autowired
     private FriendDao friendDao;
-    @Autowired
-    private FriendRequestDao friendRequestDao;
 
     @Override
     public User login(UserFormTypeEnum loginValue, String loginName, String password) {
@@ -73,30 +73,6 @@ public class UserServiceImpl implements UserService {
             }
         }
         return users;
-    }
-
-    @Override
-    public RequestFriendsStatusEnum requestFriend(String username) {
-        User currentUser = RequestContent.getCurrentUser();
-        User acceptUser = userDao.getRepository().findAllByName(username);
-        if(acceptUser == null) {
-            return RequestFriendsStatusEnum.USER_NOT_EXIST;
-        }
-        if(acceptUser.getName().equals(currentUser.getName())) {
-            return RequestFriendsStatusEnum.NOT_YOURSELF;
-        }
-        Friend friend = friendDao.getRepository().findAllByUserIdAndFriendId(currentUser.getId(), acceptUser.getId());
-        if(friend != null) {
-            return RequestFriendsStatusEnum.ALREADY_FRIENDS;
-        }
-
-        FriendRequest friendRequest = new FriendRequest();
-        friendRequest.setSendUserId(RequestContent.getCurrentUser().getId());
-        friendRequest.setAcceptUserId(acceptUser.getId());
-        friendRequestDao.getRepository().save(friendRequest);
-
-        //TODO: 向目标用户发送好友申请
-        return RequestFriendsStatusEnum.SUCCESS;
     }
 
     @Override

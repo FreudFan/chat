@@ -13,20 +13,30 @@ public class JacksonConfig {
 
     @Bean
     public Converter<String, LocalDate> localDateConverter() {
+        String datePattern = "yyyy-MM-dd";
         return new Converter<String, LocalDate>() {
             @Override
             public LocalDate convert(String source) {
-                return LocalDate.parse(source, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                try {
+                    return LocalDate.parse(source, DateTimeFormatter.ofPattern(datePattern));
+                } catch (Exception e) {
+                    throw new IllegalArgumentException("无效的日期格式，请使用这种格式:" + datePattern);
+                }
             }
         };
     }
 
     @Bean
     public Converter<String, LocalDateTime> localDateTimeConverter() {
+        String datePattern = "yyyy-MM-dd HH:mm:ss";
         return new Converter<String, LocalDateTime>() {
             @Override
             public LocalDateTime convert(String source) {
-                return LocalDateTime.parse(source, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                try {
+                    return LocalDateTime.parse(source, DateTimeFormatter.ofPattern(datePattern));
+                } catch (Exception e) {
+                    throw new IllegalArgumentException("无效的日期格式，请使用这种格式:" + datePattern);
+                }
             }
         };
     }

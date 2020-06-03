@@ -20,7 +20,7 @@ public class User {
     private Integer id;
 
     /*** 用户名 **/
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String name;
 
     /*** 密码 **/

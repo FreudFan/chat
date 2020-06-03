@@ -23,6 +23,16 @@
         where user.id = friend.friend_id and friend.user_id = #{userId}
     </select>
 
+    <select id="findByName" parameterType="java.lang.String" resultType="User">
+        select * from user where name = #{username}
+    </select>
+
+    <select id="findFriendById" parameterType="java.lang.Integer" resultType="userVO">
+        select user.id, user.name, user.gender, user.head_portrait, friend.group_id, friend.nickname
+        from user, friend
+        where user.id = friend.friend_id and friend.user_id = #{userId} and friend.friend_id = #{friendId}
+    </select>
+
     <resultMap type="edu.sandau.chat.vo.UserVO" id="userVO">
         <id column="id" property="id" />
         <result column="name" property="name" />

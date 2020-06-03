@@ -7,6 +7,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+/***
+ * 好友申请表
+ */
 @Data
 @Entity
 @EntityListeners(AuditingEntityListener.class)
