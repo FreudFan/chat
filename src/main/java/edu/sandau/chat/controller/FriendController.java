@@ -1,5 +1,6 @@
 package edu.sandau.chat.controller;
 
+import edu.sandau.chat.entity.FriendGroup;
 import edu.sandau.chat.enums.RequestFriendsStatusEnum;
 import edu.sandau.chat.service.FriendService;
 import edu.sandau.chat.service.UserService;
@@ -46,6 +47,30 @@ public class FriendController {
         friendService.addFriendToList(acceptFriendVO.getFriendId());
         return "123";
     }
+
+    /***
+     * 修改好友分组名
+     * @param friendGroup
+     * @return
+     */
+    @PostMapping("/modifyGroup")
+    public FriendGroup modifyGroupName(@RequestBody FriendGroup friendGroup)
+    {
+        friendService.modifyFriendGroupName(friendGroup);
+        return friendGroup;
+    }
+
+    /***
+     * 删除好友分组
+     * @param friendGroup
+     * @return
+     */
+    @PostMapping("/deleteGroup")
+    public boolean deleteGroup(@RequestBody FriendGroup friendGroup)
+    {
+        return friendService.deleteFriendGroup(friendGroup);
+    }
+
 
 
 }
