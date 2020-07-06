@@ -39,7 +39,7 @@
 9. npm
 
 #### 系统架构图
-<img src="https://raw.githubusercontent.com/FreudFan/image/master/chat/project-architecture.png" alt="系统架构图" width="700" />
+<img src="https://raw.githubusercontent.com/FreudFan/image/master/chat/project-architecture.PNG" alt="系统架构图" width="700" />
 
 ### 接口文档
 
