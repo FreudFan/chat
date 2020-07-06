@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.sandau.chat.dao.mapper.ChatMessageMapper">
+
+    <update id="batchUpdateMsgSigned" parameterType="java.util.List">
+        update chat_message set sign_flag = 1
+        where id in
+        <foreach collection="list" item="id" index="index" open="(" close=")" separator=" , ">
+            #{id}
+        </foreach>
+    </update>
+
+    <select id="getUnReadMessage" parameterType="int" resultMap="chatMsgMap">
+        select m.sender_user_id, m.accept_user_id, m.message
+        from chat_message m
+        where m.sign_flag = 0 and m.accept_user_id = #{userId}
+    </select>
+
+    <select id="getHistoryMessage" parameterType="String" resultType="chatMessage">
+        select *
+        from chat_message m
+        where m.sender_user_id = #{currentId} and m.accept_user_id = #{userId}
+        <if test=" startDate != null ">
+            and m.create_time > #{startDate}
+        </if>
+
+        UNION ALL
+
+        select *
+        from chat_message m
+        where m.sender_user_id = #{userId} and m.accept_user_id = #{currentId}
+        <if test=" startDate != null ">
+            and m.create_time > #{startDate}
+        </if>
+
+        <choose>
+            <when test=" startDate != null ">
+                ORDER BY create_time ASC
+            </when>
+            <otherwise>
+                ORDER BY create_time DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <resultMap id="chatMsgMap" type="ChatMsg">
+        <result column="sender_usr_id" property="senderId"/>
+        <result column="accept_user_id" property="receiverId"/>
+        <result column="group_Id" property="groupId"/>
+        <result column="message" property="msg"/>
+    </resultMap>
+
+</mapper>

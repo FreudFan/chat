@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.sandau.chat.dao.mapper.GroupMessageMapper">
+
+    <select id="getHistoryMessage" parameterType="String" resultType="groupMessage">
+        select *
+        from group_message m
+        where m.group_id = #{groupId}
+        <if test=" startDate != null ">
+            and m.create_time > #{startDate}
+        </if>
+
+        <choose>
+            <when test=" startDate != null ">
+                ORDER BY create_time ASC
+            </when>
+            <otherwise>
+                ORDER BY create_time DESC
+            </otherwise>
+        </choose>
+    </select>
+
+</mapper>

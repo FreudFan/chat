@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace表示命名空间 -->
+<mapper namespace="edu.sandau.chat.dao.mapper.GroupRequestMapper">
+    <select id="queryGroupRequest" parameterType="java.lang.Integer"
+            resultMap="groupRequestVOResultMap">
+        select g.id as request_id, g.group_id, g.request_date_time, g.send_user_id,
+                user.id as user_id, user.name, user.gender, user.head_portrait
+        from group_request g, user
+        where group_id = #{groupId} and user.id = g.send_user_id
+    </select>
+
+    <resultMap id="groupRequestVOResultMap" type="GroupRequestVO">
+        <id column="id" property="request_id"/>
+        <result column="group_id" property="groupId"/>
+        <result column="request_date_time" property="requestDateTime"/>
+        <result column="send_user_id" property="sendUserId"/>
+        <result column="user_id" property="userVo.id"/>
+        <result column="name" property="userVo.name"/>
+        <result column="gender" property="userVo.gender"/>
+        <result column="head_portrait" property="userVo.headPortrait"/>
+    </resultMap>
+
+
+</mapper>

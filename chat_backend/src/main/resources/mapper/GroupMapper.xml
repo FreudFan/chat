@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.sandau.chat.dao.mapper.GroupMapper">
+
+    <select id="queryUserJoinGroup" parameterType="int" resultType="Group">
+        select g.*
+        from user_group g, user_group_to_user u
+        where g.id = u.group_id and u.user_id = #{userId} and g.flag = 0
+    </select>
+
+    <select id="queryGroupUsers" parameterType="int" resultType="UserVO">
+        select user.id, user.name, user.gender, user.head_portrait, u.nickname, u.role_id as groupId
+        from user, user_group_to_user u
+        where u.group_id = #{groupId} and u.user_id = user.id;
+    </select>
+
+    <select id="searchGroup" parameterType="java.lang.String" resultMap="groupVOResultMap">
+        select *
+        from user_group
+        where name like concat('%',#{name},'%');
+    </select>
+
+    <select id="getGroupUsersId" parameterType="int" resultType="int">
+        select user_id from user_group_to_user where group_id = #{groupId}
+    </select>
+
+
+    <resultMap id="groupVOResultMap" type="GroupVO">
+        <id column="id" property="groupId"/>
+        <result column="name" property="name"/>
+    </resultMap>
+
+</mapper>

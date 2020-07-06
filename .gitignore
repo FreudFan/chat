@@ -15,6 +15,9 @@
 out/
 build/
 .gradle/
+.git/
+dataSources/
+.ideaDataSources/
 
 ### NetBeans ###
 /nbproject/private/
