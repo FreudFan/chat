@@ -1,19 +1,17 @@
 # chat_frontend_dev
 
-## Project setup
-```
-npm install
-```
+## 前端模块
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+### 前端技术栈
 
-### Compiles and minifies for production
-```
-npm run build
-```
+1. Vue
+3. axios
+4. vue-router
+5. Vuex
+6. WebSocket
+7. vue-cli4
+8. JavaScript ES6
+9. npm
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### 前端架构图
+<img src="https://raw.githubusercontent.com/FreudFan/image/master/chat/frontend-architecture" alt="前端架构图" width="700" />
