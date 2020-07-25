@@ -66,6 +66,4 @@ pagehelper:
   auto-dialect: mysql
   reasonable: true
   support-methods-arguments: true
-logging:
-  pattern:
-    console:
+
