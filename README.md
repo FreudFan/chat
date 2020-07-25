@@ -23,9 +23,11 @@
 3. WebSocket
 4. MyBatis
 5. Spring Data JPA
-6. Alibaba Druid
+6. Redis
 7. MySQL
-8. Gradle
+8. Spring Session
+9. Alibaba Druid
+10. Gradle
 
 #### 前端技术栈
 
