@@ -20,7 +20,10 @@ public class ApplicationContextUtil implements ApplicationContextAware {
         }
     }
 
-    // 获取applicationContext
+    /***
+     * 获取applicationContext
+     * @return
+     */
     public static ApplicationContext getApplicationContext() {
         return applicationContext;
     }

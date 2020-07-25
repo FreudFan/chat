@@ -6,7 +6,7 @@
     <!--定义日志储存文件目录-->
     <properties>
         <property name="LOG_HOME">logs</property>
-        <property name="FORMAT">%date{yyyy-MM-dd HH:mm:ss.SSS} %level --- [%thread] [%class %line] : %message%n
+        <property name="FORMAT">%date{yyyy-MM-dd HH:mm:ss.SSS} %level %processId --- [%thread] [%class %line] : %message%n
         </property>
     </properties>
     <Appenders>

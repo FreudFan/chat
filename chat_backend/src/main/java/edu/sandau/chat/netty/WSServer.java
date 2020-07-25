@@ -1,5 +1,7 @@
 package edu.sandau.chat.netty;
 
+import edu.sandau.chat.boot.ApplicationContextUtil;
+import edu.sandau.chat.config.NettyProperties;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
@@ -11,6 +13,9 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class WSServer {
+
+    private NettyProperties properties =
+            (NettyProperties) ApplicationContextUtil.getBean("nettyProperties");
 
     private static class SingletonWSServer {
         static final WSServer instance = new WSServer();
@@ -35,8 +40,9 @@ public class WSServer {
     }
 
     public void start() {
-        this.future = server.bind(8088);
-        log.info("netty websocket server 启动完毕... ");
+        this.future = server.bind(properties.getPort());
+        log.info("netty websocket server 启动完毕... ws://127.0.0.1:{}/{}",
+                properties.getPort(), properties.getWebsocketPath());
     }
 
 }

@@ -1,5 +1,7 @@
 package edu.sandau.chat.netty;
 
+import edu.sandau.chat.boot.ApplicationContextUtil;
+import edu.sandau.chat.config.NettyProperties;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
@@ -9,6 +11,10 @@ import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
 
 public class WSServerInitializer extends ChannelInitializer<SocketChannel> {
+
+    private NettyProperties properties =
+            (NettyProperties) ApplicationContextUtil.getBean("nettyProperties");
+
     @Override
     protected void initChannel(SocketChannel ch) throws Exception {
         ChannelPipeline pipeline = ch.pipeline();
@@ -29,7 +35,7 @@ public class WSServerInitializer extends ChannelInitializer<SocketChannel> {
          * 会帮你处理捂手动作：handshaking ( close, ping, pong ) ping+pong = 心跳
          * 对 websocket 来讲，都是以 frames 进行传输的，不同的数据类型对于的frames也不同
          */
-        pipeline.addLast(new WebSocketServerProtocolHandler("/ws"));
+        pipeline.addLast(new WebSocketServerProtocolHandler("/" + properties.getWebsocketPath()));
 
         // 自定义的handler
         pipeline.addLast(new ChatHandler());

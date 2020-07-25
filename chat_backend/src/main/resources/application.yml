@@ -4,6 +4,12 @@ server:
     uri-encoding: UTF-8
     connection-timeout: 20000
 
+netty:
+  # netty 端口
+  port: 8088
+  # websocket 路径
+  websocketPath: ws
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
