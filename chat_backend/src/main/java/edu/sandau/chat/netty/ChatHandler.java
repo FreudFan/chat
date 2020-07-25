@@ -5,6 +5,7 @@ import edu.sandau.chat.service.GroupService;
 import edu.sandau.chat.service.MessageService;
 import edu.sandau.chat.service.UserService;
 import edu.sandau.chat.utils.JacksonUtil;
+import edu.sandau.chat.utils.RedisUtil;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -34,6 +35,8 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
             (ChannelUtils) ApplicationContextUtil.getBean("channelUtils");
     private GroupService groupService =
             (GroupService) ApplicationContextUtil.getBean("groupServiceImpl");
+    private RedisUtil redisUtil =
+            (RedisUtil) ApplicationContextUtil.getBean("redisUtil");
     private UserService userService =
             (UserService) ApplicationContextUtil.getBean("userServiceImpl");
 
@@ -42,6 +45,7 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
      */
     public static volatile ChannelGroup users = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 
+    @Override
     protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msg) throws Exception {
         String content = msg.text();
         log.info("收到来自频道 {} 的消息: {}", ctx.channel().id(), content);
@@ -49,6 +53,10 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
         DataContent dataContent = JacksonUtil.fromJSON(content, DataContent.class);
         Integer action = dataContent.getAction();
         Integer senderId = dataContent.getChatMsg().getSenderId();
+        // 判断用户是否已经登录
+        if (!redisUtil.checkUser(senderId)) {
+            throw new SocketException(SocketException.NOT_LOGIN);
+        }
         MsgActionEnum actionEnum = MsgActionEnum.getEnumByType(action);
         assert actionEnum != null;
         switch (actionEnum) {
@@ -96,6 +104,7 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
                 // 2.4 心跳类型的消息
                 System.out.println("收到来自channel为[" + currentChannel + "]的心跳包...");
                 break;
+            default:
         }
 
     }

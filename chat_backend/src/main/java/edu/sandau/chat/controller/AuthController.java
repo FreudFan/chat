@@ -7,6 +7,7 @@ import edu.sandau.chat.exception.LoginException;
 import edu.sandau.chat.interceptor.RequestContent;
 import edu.sandau.chat.service.UserService;
 import edu.sandau.chat.utils.FormCheckUtil;
+import edu.sandau.chat.utils.RedisUtil;
 import edu.sandau.chat.vo.UserInfoCheckVO;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -21,6 +22,8 @@ import java.util.Map;
 public class AuthController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private RedisUtil redisUtil;
 
     @PostMapping("/login")
     public User login(@RequestBody Map<String, String> param, HttpSession session) {
@@ -33,6 +36,7 @@ public class AuthController {
         User user = userService.login(loginValue, text, password);
         if (user != null) {
             session.setAttribute("user", user);
+            redisUtil.putUser(user);
             RequestContent.add(user);
             return user;
         } else {

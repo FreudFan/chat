@@ -15,6 +15,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 public class JacksonUtil {
@@ -85,6 +87,15 @@ public class JacksonUtil {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /***
+     * 将 object 转成 map
+     * @param obj
+     * @return
+     */
+    public static Map<String, String> toMap(Object obj) {
+        return (Map<String, String>) fromJSON(toJSON(obj), new TypeReference<Map<String,String>>(){});
     }
 
     public static class LocalDateSerializer extends JsonSerializer<LocalDate> {

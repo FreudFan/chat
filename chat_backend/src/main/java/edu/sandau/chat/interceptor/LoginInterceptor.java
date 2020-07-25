@@ -1,6 +1,8 @@
 package edu.sandau.chat.interceptor;
 
 import edu.sandau.chat.entity.user.User;
+import edu.sandau.chat.utils.RedisUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -14,11 +16,16 @@ import java.io.PrintWriter;
 @Component
 public class LoginInterceptor implements HandlerInterceptor {
 
+    @Autowired
+    private RedisUtil redisUtil;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         if (user != null) {
+            // 手动维护在线用户
+            redisUtil.putUser(user);
             RequestContent.add(user);
             return true;
         } else {
