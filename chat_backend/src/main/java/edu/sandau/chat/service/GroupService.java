@@ -135,6 +135,13 @@ public interface GroupService {
      */
     String getUserGroupNickname(Integer groupId, Integer userId);
 
+    /***
+     * 修改用户群内昵称
+     * @param groupId
+     * @param userId
+     * @return
+     */
+    boolean changeUserGroupNickname(Integer groupId, Integer userId, String nickName);
 
     /***
      * 群通知（只有群主和管理员看得到）

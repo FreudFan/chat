@@ -28,7 +28,7 @@ POST /group/dissolute/{groupId}
 ```
 参数
 ```
-groupId : 1
+groupId = 1
 ```
 返回
 ```
@@ -45,7 +45,7 @@ GET /group/members/{groupId}
 ```
 参数
 ```
-groupId : 1
+groupId = 1
 ```
 返回
 ```
@@ -73,7 +73,7 @@ POST /group/requestGroup/{groupId}
 ```
 参数
 ```
-groupId : 3
+groupId = 3
 ```
 返回
 ```
@@ -93,10 +93,11 @@ POST /group/acceptGroup
 ```
 参数
 ```
-sendGroupId:3,
-sendUserId:2,
-operationType:1
-
+{
+    "sendGroupId": 3,
+    "sendUserId": 2,
+    "operationType": 1
+}
 ```
 返回
 ```
@@ -119,7 +120,7 @@ GET /group/queryGroup/{name}
 ```
 参数
 ```
-name = {name}
+name = 班群
 ```
 返回
 ```
@@ -228,9 +229,8 @@ get /group/showGroupAttachmentList/{groupId}
 ```
 参数
 ```
-{
-  groupId:2
-}
+  groupId = 2
+
 ```
 返回
 ```
@@ -260,8 +260,8 @@ POST /group/deleteGroupAttachment/{groupId}/{fileId}
 ```
 参数
 ```
-  groupId:2
-  fileId:8
+  groupId = 2
+  fileId = 8
 ```
 返回
 ```
@@ -274,8 +274,8 @@ POST /group/setUserManageRole/{groupId}/{userId}
 ```
 参数
 ```
-  groupId:3,
-  userId:2
+  groupId = 3
+  userId = 2
 ```
 返回
 ```
@@ -288,8 +288,8 @@ POST /group/removeUserManageRole/{groupId}/{userId}
 ```
 参数
 ```
-  groupId:3,
-  userId:2
+  groupId = 3
+  userId = 2
 ```
 返回
 ```
@@ -302,8 +302,8 @@ POST /group//removeGroupUser/{groupId}/{userId}
 ```
 参数
 ```
-  groupId:3,
-  userId:2
+  groupId = 3,
+  userId = 2
 ```
 返回
 ```
@@ -316,8 +316,8 @@ Get /group/showGroupUserInfo/{groupId}/{userId}
 ```
 参数
 ```
-  groupId:3,
-  userId:1（被查询的用户id）
+  groupId = 3,
+  userId = 1（被查询的用户id）
 ```
 返回
 ```
@@ -350,12 +350,12 @@ POST /group/addNotice
 
 ### 删除群公告(只有群主和管理员能删除)
 ```
-POST /group/deleteNotice
+POST /group/deleteNotice/{groupId}/{noticeId}
 ```
 参数(param)
 ```
-  groupId:3,
-  noticeId:2
+  groupId = 3,
+  noticeId = 2
 ```
 返回
 ```
@@ -385,7 +385,7 @@ POST /group/showNotice/{noticeId}
 ```
 参数
 ```
-  3
+noticeId = 3
 ```
 返回
 ```
@@ -406,7 +406,7 @@ POST /group/showNoticeList/{groupId}
 ```
 参数
 ```
-  3
+groupId = 3
 ```
 返回
 ```
@@ -430,17 +430,13 @@ POST /group/showNoticeList/{groupId}
     }
 ```
 
-
-
 ### 显示群请求列表
 ```
-get /group/searchGroupRequest/{groupId}
+GET /group/searchGroupRequest/{groupId}
 ```
 参数
 ```
-{
-  groupId:2
-}
+groupId = 2
 ```
 返回
 ```
@@ -467,3 +463,31 @@ get /group/searchGroupRequest/{groupId}
          }
  ]
 ```
+
+### 获取用户群内昵称
+```
+GET /group/nickname/{groupId}
+```
+参数
+```
+groupId = 3
+```
+返回
+```
+liqi
+```
+
+### 修改用户群昵称
+```
+POST /group/nickname/{groupId}/{nickName}"
+```
+参数
+```
+groupId = 3
+nickName = liqi1
+```
+返回
+```
+true
+```
+

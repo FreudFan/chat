@@ -8,6 +8,7 @@ import edu.sandau.chat.enums.OperatorGroupRequestTypeEnum;
 import edu.sandau.chat.enums.RequestGroupStatusEnum;
 import edu.sandau.chat.exception.AttachmentException;
 import edu.sandau.chat.exception.FormException;
+import edu.sandau.chat.interceptor.RequestContent;
 import edu.sandau.chat.service.GroupAttachmentService;
 import edu.sandau.chat.service.GroupNoticeService;
 import edu.sandau.chat.service.GroupService;
@@ -281,6 +282,29 @@ public class GroupController {
     @GetMapping("/searchGroupRequest/{groupId}")
     public List<GroupRequestVO> searchGroupRequest(@PathVariable("groupId") Integer groupId) {
         return groupService.listGroupRequest(groupId);
+    }
+
+    /***
+     * 获取用户群内昵称
+     * @param groupId
+     * @return
+     */
+    @GetMapping("/nickname/{groupId}")
+    public String getNickname(@PathVariable("groupId") Integer groupId) {
+        int userId = RequestContent.getCurrentUser().getId();
+        return groupService.getUserGroupNickname(groupId, userId);
+    }
+
+    /***
+     * 修改用户群昵称
+     * @param groupId
+     * @param nickName
+     * @return
+     */
+    @PostMapping("/nickname/{groupId}/{nickName}")
+    public boolean changeNickname(@PathVariable("groupId") Integer groupId, @PathVariable("nickName") String nickName) {
+        int userId = RequestContent.getCurrentUser().getId();
+        return groupService.changeUserGroupNickname(groupId, userId, nickName);
     }
 
 }

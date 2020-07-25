@@ -12,4 +12,5 @@ public interface GroupUserRepository extends CrudRepository<GroupUser, Integer> 
     List<GroupUser> findAllByUserId(Integer userId);
 
     GroupUser findByGroupIdAndUserId(Integer groupId, Integer userId);
+
 }

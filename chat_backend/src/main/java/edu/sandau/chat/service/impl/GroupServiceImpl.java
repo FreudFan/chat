@@ -18,6 +18,8 @@ import edu.sandau.chat.vo.GroupRequestVO;
 import edu.sandau.chat.vo.GroupVO;
 import edu.sandau.chat.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -265,9 +267,19 @@ public class GroupServiceImpl implements GroupService {
         groupUserDao.getRepository().deleteByGroupIdAndUserId(acceptGroupId, sendUserId);
     }
 
+    @Cacheable(cacheNames = "groupNickName", key = "#groupId+':'+#userId", unless = "#result.empty")
     @Override
     public String getUserGroupNickname(Integer groupId, Integer userId) {
         return groupUserDao.getRepository().findByGroupIdAndUserId(groupId, userId).getNickname();
+    }
+
+    @CacheEvict(cacheNames = "groupNickName", key = "#groupId+':'+#userId")
+    @Override
+    public boolean changeUserGroupNickname(Integer groupId, Integer userId, String nickName) {
+        GroupUser groupUser = groupUserDao.getRepository().findByGroupIdAndUserId(groupId, userId);
+        groupUser.setNickname(nickName);
+        groupUserDao.getRepository().save(groupUser);
+        return true;
     }
 
     @Override
