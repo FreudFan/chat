@@ -9,9 +9,11 @@
 3. WebSocket
 4. MyBatis
 5. Spring Data JPA
-6. Alibaba Druid
+6. Redis
 7. MySQL
-8. Gradle
+8. Spring Session
+9. Alibaba Druid
+10. Gradle
 
 ### 架构概览
 
@@ -20,6 +22,8 @@
 数据库连接池使用 Druid  
 数据库采用 MySQL 8  
 包管理采用 Gradle 6.3  
+状态管理采用 Redis 6  
+支持分布式 cache 和 分布式 session  
 WebSocket 接口层采用 Netty 的 Reactor 线程模型  
 
 ### 后端架构图
@@ -41,7 +45,6 @@ WebSocket 接口层采用 Netty 的 Reactor 线程模型
 ### Websocket 请求数据流
 
 <img src="https://raw.githubusercontent.com/FreudFan/image/master/chat/socket-dataflow.PNG" alt="socket-dataflow" width="700" />
-
 
 ### AJAX 请求数据流
 
