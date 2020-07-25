@@ -9,6 +9,8 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
 configurations {
+    all*.exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+
     compileOnly {
         extendsFrom annotationProcessor
     }
@@ -34,6 +36,11 @@ dependencies {
     runtimeOnly 'mysql:mysql-connector-java'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.session:spring-session-data-redis'
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
 
     compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: '9.0.36'
     compile group: 'io.netty', name: 'netty-all', version: '4.1.50.Final'
