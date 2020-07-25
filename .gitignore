@@ -19,6 +19,9 @@ build/
 dataSources/
 .ideaDataSources/
 
+# Log file
+*.log
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
