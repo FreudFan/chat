@@ -68,7 +68,7 @@ public class UserController {
     }
 
     /***
-     * 查询好友列表
+     * 查询群组列表
      * @return
      */
     @GetMapping("/group")
