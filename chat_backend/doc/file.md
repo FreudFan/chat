@@ -36,7 +36,7 @@ id = 1 //文件id
 
 ### 显示图片
 ```
-GET /photo/down?id=1
+GET /file/photo?id=29
 ```
 参数
 ```
