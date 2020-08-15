@@ -146,7 +146,7 @@ public class FriendServiceImpl implements FriendService {
         friendRequest.setAcceptUserId(acceptUserId);
         friendRequestDao.getRepository().save(friendRequest);
         // 向目标用户发送好友申请
-        UserVO userVO = userService.getUserVOById(acceptUserId);
+        UserVO userVO = userService.getUserVOById(currentId);
         DataContent dataContent = new DataContent();
         dataContent.setAction(MsgActionEnum.REQUEST_FRIEND.type);
         ChatMsg chatMsg = new ChatMsg();
