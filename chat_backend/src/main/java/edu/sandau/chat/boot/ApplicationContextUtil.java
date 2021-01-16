@@ -38,7 +38,7 @@ public class ApplicationContextUtil implements ApplicationContextAware {
     }
 
     /***
-     * 通过class获取Bean.
+     * 通过 class 获取Bean.
      * @param clazz
      * @param <T>
      * @return
@@ -48,7 +48,7 @@ public class ApplicationContextUtil implements ApplicationContextAware {
     }
 
     /***
-     * 通过name,以及Clazz返回指定的Bean
+     * 通过 name,以及 Clazz 返回指定的 Bean
      * @param name
      * @param clazz
      * @param <T>
