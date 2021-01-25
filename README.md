@@ -47,3 +47,5 @@
 
 https://github.com/FreudFan/chat/tree/master/chat_backend/doc
 
+
+Halo, 最近在学Netty感觉你这个实例写的挺好的，不过上面的图片好像丢失了，另外如果能附上sql文件就更好了-_-.
